@@ -17,16 +17,6 @@ const sideLinks = [
     ),
   },
   {
-    href: "#mode",
-    label: "Active Mode",
-    icon: (
-      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M1 7c3-5 6-6 9-6s6 1 9 6c-3 5-6 6-9 6s-6-1-9-6z" />
-        <circle cx="10" cy="7" r="3" />
-      </svg>
-    ),
-  },
-  {
     href: "/dictionary",
     label: "Dictionary Checker",
     icon: (
@@ -36,7 +26,7 @@ const sideLinks = [
     ),
   },
   {
-    href: "#saved",
+    href: "/saved",
     label: "Saved Words",
     icon: (
       <svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -45,7 +35,7 @@ const sideLinks = [
     ),
   },
   {
-    href: "#stats",
+    href: "/stats",
     label: "Stats",
     icon: (
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -62,7 +52,6 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden w-64 shrink-0 flex-col gap-2 overflow-y-auto border-r border-border-default bg-bg-secondary px-4 py-4 shadow-[1px_0_0_rgba(255,255,255,0.02)] md:flex">
-      {/* Rack Editor header */}
       <div className="border-b border-border-subtle px-2 pb-4">
         <h2 className="text-xl font-semibold text-text-primary">
           Rack Editor
@@ -70,7 +59,6 @@ export default function Sidebar() {
         <p className="text-sm text-text-secondary">Enter letters to solve</p>
       </div>
 
-      {/* Nav links */}
       <nav className="flex flex-1 flex-col gap-1">
         {sideLinks.map((link) => {
           const isActive =
@@ -97,14 +85,13 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Clear Board button */}
       <div className="border-t border-border-subtle pt-6">
-        <button className="flex w-full items-center justify-center gap-2 border border-border-default bg-transparent px-4 py-2 text-[11px] font-bold uppercase tracking-[0.88px] text-text-primary transition-colors hover:bg-bg-tile">
-          <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M1 3h10M4 3V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1m1 0v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3h8z" />
-          </svg>
-          Clear Board
-        </button>
+        <Link
+          href="/guide"
+          className="flex w-full items-center justify-center gap-2 border border-border-default bg-transparent px-4 py-2 text-[11px] font-bold uppercase tracking-[0.88px] text-text-primary no-underline transition-colors hover:bg-bg-tile"
+        >
+          How to Play
+        </Link>
       </div>
     </aside>
   );

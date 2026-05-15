@@ -38,19 +38,19 @@ const letterValues = [
 const faqItems = [
   {
     q: "Which dictionary is used?",
-    a: "We aggregate data from standard tournament word lists (TWL/NWL) and international variants (CSW) to ensure maximum coverage. You can filter by specific region in the Settings menu.",
+    a: "We use a bundled wordlist based on standard tournament word lists. The dictionary is loaded locally — no internet required for solving.",
   },
   {
     q: "Why was my word rejected in-game?",
-    a: "Live games occasionally push undocumented, silent updates to their dictionaries to remove offensive words or adjust to recent language trends. Our solver operates on a snapshot basis.",
+    a: "Live games may use a different or updated dictionary version. Our solver operates on a snapshot basis. Check the Dictionary Checker page to verify words.",
   },
   {
     q: "Are proper nouns allowed?",
-    a: "Generally, no. Standard rules strictly prohibit proper nouns, abbreviations, and words requiring hyphens. Our solver filters these out by default.",
+    a: "No. Standard rules prohibit proper nouns, abbreviations, and hyphenated words. Our solver filters these out by default.",
   },
   {
-    q: "How often is the database updated?",
-    a: "The core dictionary is synchronized quarterly with official tournament bodies. Minor patch updates for specific game variants are pushed silently on a monthly basis.",
+    q: "What do the tile colors mean?",
+    a: "Green/active tiles come from your rack. Gray/default tiles are board letters already placed. Outlined tiles are blank/wildcard tiles (score 0 points).",
   },
 ];
 
@@ -65,145 +65,120 @@ export default function GuidePage() {
           {/* Header */}
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
-              <span className="hidden md:inline">How-to-Play & Pattern Guide</span>
-              <span className="md:hidden">Pattern Guide</span>
+              How to Play & Solver Guide
             </h1>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-text-secondary md:text-base">
-              Master the syntax to uncover high-scoring words instantly.
-              Understand the board mechanics, letter values, and dictionary
-              constraints to optimize your plays.
+              Learn how the solver works, understand the three input modes, and master the board mechanics.
             </p>
           </div>
 
-          {/* Mobile: Query Syntax label */}
-          <h2 className="mt-8 flex items-center gap-1 text-xs font-bold uppercase tracking-[0.88px] text-text-secondary md:hidden">
-            <span className="text-accent-indigo-light">&lt;&gt;</span> QUERY SYNTAX
+          {/* ── THREE SOLVER MODES ── */}
+          <h2 className="mt-10 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.88px] text-text-secondary">
+            <span className="text-accent-indigo-light">&lt;&gt;</span> SOLVER MODES
           </h2>
 
-          {/* Bento Grid - Pattern Syntax + Rules */}
-          <div className="mt-6 grid gap-6 md:mt-10 md:grid-cols-12">
-            {/* Manual Pattern Syntax */}
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
+            {/* Mode 1: Board Letters */}
+            <div className="rounded-lg border border-accent-green-border bg-[rgba(67,225,121,0.03)] p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="font-mono text-sm font-bold text-accent-green">Board Letters</h3>
+                <span className="rounded bg-accent-green-bg px-2 py-0.5 font-mono text-[10px] font-bold text-accent-green">RECOMMENDED</span>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-text-secondary">
+                Type the letters visible on the board. The solver finds words using your rack + any subset of those board letters.
+              </p>
+              <div className="mt-4 rounded border border-border-subtle bg-bg-input p-3">
+                <div className="font-mono text-xs text-text-secondary">
+                  <div>Rack: <span className="float-right font-bold text-text-primary">OU</span></div>
+                  <div className="mt-1">Pattern: <span className="float-right font-bold text-accent-green">BGHTL</span></div>
+                  <div className="mt-2 border-t border-border-faint pt-2">Result:</div>
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    {["BOUGHT", "BOUGH", "GHOUL", "TOUGH"].map((w) => (
+                      <span key={w} className="rounded bg-accent-green px-2 py-0.5 text-[10px] font-bold text-bg-primary">{w}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mode 2: Positional Pattern */}
+            <div className="rounded-lg border border-[rgba(88,101,242,0.3)] bg-[rgba(88,101,242,0.03)] p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="font-mono text-sm font-bold text-accent-indigo-light">Positional Pattern</h3>
+                <span className="rounded bg-accent-indigo-bg px-2 py-0.5 font-mono text-[10px] font-bold text-accent-indigo-light">ADVANCED</span>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-text-secondary">
+                Use dots (<code className="text-accent-indigo-light">.</code>) for positions to fill from rack. Letters mark fixed board positions.
+              </p>
+              <div className="mt-4 rounded border border-border-subtle bg-bg-input p-3">
+                <div className="font-mono text-xs text-text-secondary">
+                  <div>Rack: <span className="float-right font-bold text-text-primary">ADELRT?</span></div>
+                  <div className="mt-1">Pattern: <span className="float-right font-bold text-accent-indigo-light">.E..R</span></div>
+                  <div className="mt-2 border-t border-border-faint pt-2">Result:</div>
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    {["DETER", "CEDAR", "ELDER"].map((w) => (
+                      <span key={w} className="rounded bg-accent-indigo px-2 py-0.5 text-[10px] font-bold text-white">{w}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mode 3: Rack Only */}
+            <div className="rounded-lg border border-accent-yellow-border bg-[rgba(192,172,35,0.03)] p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="font-mono text-sm font-bold text-accent-yellow">Rack Only</h3>
+                <span className="rounded bg-accent-yellow-bg px-2 py-0.5 font-mono text-[10px] font-bold text-accent-yellow">SIMPLE</span>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-text-secondary">
+                Leave the pattern empty. The solver finds all words formable from your rack letters alone (anagram search).
+              </p>
+              <div className="mt-4 rounded border border-border-subtle bg-bg-input p-3">
+                <div className="font-mono text-xs text-text-secondary">
+                  <div>Rack: <span className="float-right font-bold text-text-primary">ARTIES?</span></div>
+                  <div className="mt-1">Pattern: <span className="float-right italic text-text-muted">(empty)</span></div>
+                  <div className="mt-2 border-t border-border-faint pt-2">Result:</div>
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    {["ARTISTE", "SATIRE", "AIREST"].map((w) => (
+                      <span key={w} className="rounded bg-accent-yellow px-2 py-0.5 text-[10px] font-bold text-bg-primary">{w}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── RULES COMPARISON ── */}
+          <div className="mt-10 grid gap-6 md:grid-cols-12">
+            {/* Blank Tiles & Wildcards */}
             <div className="rounded-lg border border-border-subtle bg-bg-secondary p-6 md:col-span-7">
-              <div className="hidden items-center gap-2 md:flex">
+              <div className="flex items-center gap-2">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent-indigo-light">
                   <rect x="2" y="2" width="12" height="12" rx="2" />
                   <path d="M5 5h6M5 8h6M5 11h4" />
                 </svg>
                 <h2 className="text-xl font-bold text-text-primary">
-                  Manual Pattern Syntax
+                  Blank Tiles & Wildcards
                 </h2>
               </div>
-              <p className="mt-3 text-sm text-text-secondary md:mt-4">
-                Use special characters to define specific positions on the board
-                when searching for words.
+              <p className="mt-3 text-sm text-text-secondary">
+                Use <code className="rounded bg-bg-tile px-1.5 py-0.5 font-mono text-accent-yellow">?</code> or{" "}
+                <code className="rounded bg-bg-tile px-1.5 py-0.5 font-mono text-accent-yellow">*</code> in your rack to represent blank tiles.
               </p>
-
-              {/* Exact Position Matches */}
-              <div className="mt-6 rounded border border-accent-green-border bg-[rgba(67,225,121,0.03)] p-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-mono text-sm font-bold text-accent-green">
-                    <span className="md:hidden">•</span>
-                    <span className="hidden md:inline">Exact Position Matches</span>
-                    <span className="md:hidden"> Single Missing</span>
-                  </h3>
-                  <span className="rounded bg-bg-tile px-2 py-0.5 font-mono text-xs text-text-secondary">
-                    . (Period)
-                  </span>
-                </div>
-                <p className="mt-2 text-xs text-text-secondary">
-                  Use a period to represent exactly one unknown letter. Ideal for
-                  building through existing letters.
-                </p>
-                <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
-                  <div className="flex items-center gap-1.5">
-                    {[".", "E", ".", ".", "R"].map((l, i) => (
-                      <div
-                        key={i}
-                        className={`flex h-10 w-10 items-center justify-center rounded-sm border font-mono text-lg font-bold ${
-                          l === "."
-                            ? "border-dashed border-border-default bg-bg-input text-text-muted"
-                            : "border-accent-green-border bg-[rgba(67,225,121,0.1)] text-accent-green"
-                        }`}
-                      >
-                        {l}
-                      </div>
-                    ))}
-                  </div>
-                  <span className="hidden text-text-muted md:block">→</span>
-                  <div className="flex flex-wrap gap-1">
-                    {["ENTER", "EAGER", "EMBER"].map((w) => (
-                      <span
-                        key={w}
-                        className="rounded bg-accent-green px-2 py-0.5 text-xs font-bold text-bg-primary"
-                      >
-                        {w}
-                      </span>
-                    ))}
+              <div className="mt-4 space-y-3">
+                <div className="flex items-center gap-3 rounded border border-border-subtle bg-bg-input p-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-sm border border-dashed border-accent-yellow-border bg-[rgba(192,172,35,0.05)] font-mono text-lg font-bold text-accent-yellow">?</div>
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary">Blank Tile</p>
+                    <p className="text-xs text-text-secondary">Matches any letter but scores 0 points (Classic) or face value (Wild).</p>
                   </div>
                 </div>
-
-                {/* Mobile example */}
-                <div className="mt-3 rounded border border-border-subtle bg-bg-input p-3 font-mono text-xs text-text-secondary md:hidden">
-                  <div>Input Pattern: <span className="float-right rounded bg-bg-tile px-2 py-0.5 font-bold text-text-primary">T.ST</span></div>
-                  <div className="mt-2">Matches found:</div>
-                  <div className="mt-1 flex gap-1">
-                    <span className="rounded bg-accent-green px-2 py-0.5 font-bold text-bg-primary">TEST</span>
-                    <span className="rounded bg-accent-green px-2 py-0.5 font-bold text-bg-primary">TOST</span>
+                <div className="flex items-center gap-3 rounded border border-border-subtle bg-bg-input p-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-sm border border-dashed border-border-default bg-bg-tile font-mono text-lg font-bold text-text-muted">.</div>
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary">Position Dot (in pattern)</p>
+                    <p className="text-xs text-text-secondary">Represents an empty board position that must be filled from your rack.</p>
                   </div>
-                </div>
-              </div>
-
-              {/* Variable Length Matches */}
-              <div className="mt-4 rounded border border-accent-yellow-border bg-[rgba(192,172,35,0.03)] p-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-mono text-sm font-bold text-accent-yellow">
-                    <span className="hidden md:inline">Variable Length Matches</span>
-                    <span className="md:hidden">? Wildcard Tile</span>
-                  </h3>
-                  <span className="rounded bg-bg-tile px-2 py-0.5 font-mono text-xs text-text-secondary">
-                    ? (Question Mark)
-                  </span>
-                </div>
-                <p className="mt-2 text-xs text-text-secondary">
-                  <span className="hidden md:inline">
-                    Use a question mark to represent zero or more unknown letters.
-                    Useful for finding prefixes or suffixes.
-                  </span>
-                  <span className="md:hidden">
-                    Represents a blank tile from your rack. Can be mapped to any
-                    letter, scoring 0 base points.
-                  </span>
-                </p>
-                <div className="mt-4 hidden items-center gap-4 md:flex">
-                  <div className="flex items-center gap-1.5">
-                    {["A", "?", "?", "T"].map((l, i) => (
-                      <div
-                        key={i}
-                        className={`flex h-10 w-10 items-center justify-center rounded-sm border font-mono text-lg font-bold ${
-                          l === "?"
-                            ? "border-dashed border-accent-yellow-border bg-[rgba(192,172,35,0.05)] text-accent-yellow"
-                            : "border-accent-green-border bg-[rgba(67,225,121,0.1)] text-accent-green"
-                        }`}
-                      >
-                        {l}
-                      </div>
-                    ))}
-                  </div>
-                  <span className="text-text-muted">→</span>
-                  <div className="flex flex-wrap gap-1">
-                    {["ART", "AUNT", "AIRCRAFT"].map((w) => (
-                      <span
-                        key={w}
-                        className="rounded bg-accent-yellow px-2 py-0.5 text-xs font-bold text-bg-primary"
-                      >
-                        {w}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                {/* Mobile example */}
-                <div className="mt-3 rounded border border-border-subtle bg-bg-input p-3 font-mono text-xs text-text-secondary md:hidden">
-                  <div>Rack Input: <span className="float-right font-bold text-text-primary">A E I ? ?</span></div>
                 </div>
               </div>
             </div>
@@ -215,7 +190,7 @@ export default function GuidePage() {
                   <path d="M8 1l2 4 4.5.7-3.25 3.2.8 4.6L8 11.4 3.95 13.5l.8-4.6L1.5 5.7 6 5z" />
                 </svg>
                 <h2 className="text-xl font-bold text-text-primary">
-                  Specific Rules
+                  Classic vs Wild
                 </h2>
               </div>
 
@@ -223,63 +198,38 @@ export default function GuidePage() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border-subtle text-left">
-                      <th className="pb-2 font-mono text-xs font-bold uppercase tracking-[0.55px] text-text-secondary">
-                        Rule
-                      </th>
-                      <th className="pb-2 font-mono text-xs font-bold uppercase tracking-[0.55px] text-text-secondary">
-                        Classic
-                      </th>
-                      <th className="pb-2 font-mono text-xs font-bold uppercase tracking-[0.55px] text-accent-indigo-light">
-                        Wild Mode
-                      </th>
+                      <th className="pb-2 font-mono text-xs font-bold uppercase tracking-[0.55px] text-text-secondary">Rule</th>
+                      <th className="pb-2 font-mono text-xs font-bold uppercase tracking-[0.55px] text-text-secondary">Classic</th>
+                      <th className="pb-2 font-mono text-xs font-bold uppercase tracking-[0.55px] text-accent-indigo-light">Wild</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border-subtle">
                     <tr>
-                      <td className="py-2 font-mono text-xs text-text-primary">
-                        Blank Tiles
-                      </td>
-                      <td className="py-2 text-xs text-text-secondary">
-                        Score 0
-                      </td>
-                      <td className="py-2 text-xs text-accent-indigo-light">
-                        Score Face Val
-                      </td>
+                      <td className="py-2 font-mono text-xs text-text-primary">Blank Tiles</td>
+                      <td className="py-2 text-xs text-text-secondary">Score 0</td>
+                      <td className="py-2 text-xs text-accent-indigo-light">Score Face Val</td>
                     </tr>
                     <tr>
-                      <td className="py-2 font-mono text-xs text-text-primary">
-                        Bingo Bonus
-                      </td>
-                      <td className="py-2 text-xs text-text-secondary">
-                        35 pts (7 tiles)
-                      </td>
-                      <td className="py-2 text-xs text-accent-indigo-light">
-                        40 pts (7 tiles)
-                      </td>
+                      <td className="py-2 font-mono text-xs text-text-primary">Bingo Bonus</td>
+                      <td className="py-2 text-xs text-text-secondary">35 pts (7 tiles)</td>
+                      <td className="py-2 text-xs text-accent-indigo-light">40 pts (7 tiles)</td>
                     </tr>
                     <tr>
-                      <td className="py-2 font-mono text-xs text-text-primary">
-                        Multipliers
-                      </td>
-                      <td className="py-2 text-xs text-text-secondary">
-                        Standard
-                      </td>
-                      <td className="py-2 text-xs text-accent-indigo-light">
-                        Stackable
-                      </td>
+                      <td className="py-2 font-mono text-xs text-text-primary">Multipliers</td>
+                      <td className="py-2 text-xs text-text-secondary">Standard</td>
+                      <td className="py-2 text-xs text-accent-indigo-light">Stackable</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               <p className="mt-6 text-xs italic text-text-secondary">
-                Toggle &apos;Wild Mode&apos; in the top navigation to recalculate
-                scores automatically.
+                Toggle &apos;Classic / Wild&apos; in the top navigation to switch modes.
               </p>
             </div>
           </div>
 
-          {/* Mobile: Multiplier Tokens */}
+          {/* ── MULTIPLIER TOKENS (mobile) ── */}
           <div className="mt-6 md:hidden">
             <h3 className="flex items-center gap-1 text-xs font-bold uppercase tracking-[0.88px] text-text-secondary">
               ☆ MULTIPLIER TOKENS
@@ -291,24 +241,17 @@ export default function GuidePage() {
                 { label: "2x Word", color: "bg-[#E91E63]" },
                 { label: "3x Word", color: "bg-[#FF9800]" },
               ].map((m) => (
-                <div
-                  key={m.label}
-                  className="flex items-center gap-2 rounded border border-border-subtle bg-bg-secondary p-3"
-                >
-                  <span
-                    className={`flex h-7 w-7 items-center justify-center rounded-sm ${m.color} text-[10px] font-bold text-white`}
-                  >
+                <div key={m.label} className="flex items-center gap-2 rounded border border-border-subtle bg-bg-secondary p-3">
+                  <span className={`flex h-7 w-7 items-center justify-center rounded-sm ${m.color} text-[10px] font-bold text-white`}>
                     {m.label.slice(0, 2)}
                   </span>
-                  <span className="font-mono text-xs text-text-secondary">
-                    {m.label}
-                  </span>
+                  <span className="font-mono text-xs text-text-secondary">{m.label}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Letter Values & Distribution */}
+          {/* ── LETTER VALUES ── */}
           <section className="mt-10">
             <div className="flex items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent-indigo-light">
@@ -333,9 +276,7 @@ export default function GuidePage() {
                         : "text-text-primary"
                     }`}
                   >
-                    <span className="font-mono text-sm font-bold">
-                      {lv.letter}
-                    </span>
+                    <span className="font-mono text-sm font-bold">{lv.letter}</span>
                     <div className="flex flex-col text-right text-[10px] text-text-secondary">
                       <span>{lv.pts}pt</span>
                       <span>x{lv.count}</span>
@@ -346,7 +287,7 @@ export default function GuidePage() {
             </div>
           </section>
 
-          {/* Dictionary Accuracy & FAQ */}
+          {/* ── FAQ ── */}
           <section className="mt-10">
             <div className="flex items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent-indigo-light">
@@ -354,36 +295,26 @@ export default function GuidePage() {
                 <path d="M5 5h6M5 8h6M5 11h3" />
               </svg>
               <h2 className="text-xl font-bold text-text-primary">
-                <span className="hidden md:inline">Dictionary Accuracy & FAQ</span>
-                <span className="md:hidden">System FAQ</span>
+                FAQ
               </h2>
             </div>
 
-            {/* Desktop: grid layout */}
+            {/* Desktop */}
             <div className="mt-4 hidden grid-cols-2 gap-6 md:grid">
               {faqItems.map((item, i) => (
                 <div key={i}>
-                  <h3 className="font-mono text-sm font-bold text-text-primary">
-                    {item.q}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-text-secondary">
-                    {item.a}
-                  </p>
+                  <h3 className="font-mono text-sm font-bold text-text-primary">{item.q}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-text-secondary">{item.a}</p>
                 </div>
               ))}
             </div>
 
-            {/* Mobile: accordion */}
+            {/* Mobile accordion */}
             <div className="mt-4 flex flex-col gap-2 md:hidden">
               {faqItems.map((item, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg border border-border-subtle bg-bg-secondary"
-                >
+                <div key={i} className="rounded-lg border border-border-subtle bg-bg-secondary">
                   <button
-                    onClick={() =>
-                      setExpandedFaq(expandedFaq === i ? null : i)
-                    }
+                    onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
                     className="flex w-full items-center justify-between p-4 text-left text-sm text-text-primary"
                   >
                     {item.q}
@@ -394,9 +325,7 @@ export default function GuidePage() {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="1.5"
-                      className={`shrink-0 transition-transform ${
-                        expandedFaq === i ? "rotate-180" : ""
-                      }`}
+                      className={`shrink-0 transition-transform ${expandedFaq === i ? "rotate-180" : ""}`}
                     >
                       <path d="M2 4l4 4 4-4" />
                     </svg>

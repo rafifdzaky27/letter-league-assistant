@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color tokens from Figma */
+  /* ── Dark theme (default) ── */
   --color-bg-primary: #101417;
   --color-bg-secondary: #1c2023;
   --color-bg-tertiary: #262a2d;
@@ -40,6 +40,42 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+/* ── Light mode overrides ── */
+html.light {
+  --color-bg-primary: #f4f5f7;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #ebedf0;
+  --color-bg-tile: #dfe1e5;
+  --color-bg-input: #f9fafb;
+
+  --color-border-default: #d1d5db;
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  --color-border-faint: rgba(0, 0, 0, 0.04);
+
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #4a4a68;
+  --color-text-muted: #9ca3af;
+  --color-text-placeholder: #9ca3af;
+
+  --color-accent-indigo: #4f56c8;
+  --color-accent-indigo-light: #4f56c8;
+  --color-accent-indigo-bg: rgba(79, 86, 200, 0.08);
+  --color-accent-indigo-bg-hover: rgba(79, 86, 200, 0.04);
+
+  --color-accent-green: #16a34a;
+  --color-accent-green-bg: rgba(22, 163, 74, 0.08);
+  --color-accent-green-border: rgba(22, 163, 74, 0.25);
+  --color-accent-green-muted: rgba(22, 163, 74, 0.12);
+
+  --color-accent-yellow: #a16207;
+  --color-accent-yellow-bg: rgba(161, 98, 7, 0.1);
+  --color-accent-yellow-border: rgba(161, 98, 7, 0.2);
+
+  --color-accent-red: #dc2626;
+  --color-accent-red-bg: rgba(220, 38, 38, 0.08);
+  --color-accent-red-border: rgba(220, 38, 38, 0.2);
+}
+
 @layer base {
   *,
   *::before,
@@ -59,6 +95,7 @@
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    transition: background-color 0.2s, color 0.2s;
   }
 
   ::selection {

@@ -18,10 +18,30 @@ const tabs = [
   },
   {
     href: "/dictionary",
-    label: "Checker",
+    label: "Check",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M3 17V3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14l-3.5-2-2.5 2-2.5-2-2.5 2L3 17z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/saved",
+    label: "Saved",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M3 17V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v13l-7-4-7 4z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/stats",
+    label: "Stats",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="2" y="11" width="4" height="7" rx="1" />
+        <rect x="8" y="6" width="4" height="12" rx="1" />
+        <rect x="14" y="2" width="4" height="16" rx="1" />
       </svg>
     ),
   },
@@ -52,7 +72,7 @@ export default function MobileBottomNav() {
           <Link
             key={tab.href}
             href={tab.href}
-            className={`flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[11px] font-medium uppercase tracking-wider no-underline transition-colors ${
+            className={`flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[10px] font-medium uppercase tracking-wider no-underline transition-colors ${
               isActive
                 ? "border-t-2 border-accent-indigo-light bg-accent-indigo-bg text-accent-indigo-light"
                 : "text-text-secondary"
