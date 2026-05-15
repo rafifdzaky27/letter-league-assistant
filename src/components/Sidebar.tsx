@@ -16,6 +16,19 @@ const sideLinks = [
       </svg>
     ),
   },
+  /*
+  {
+    href: "/scan",
+    label: "Screenshot Scanner",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="2" y="2" width="14" height="14" rx="2" />
+        <circle cx="7" cy="7" r="1.5" />
+        <path d="M16 12l-4-4-7 7" />
+      </svg>
+    ),
+  },
+  */
   {
     href: "/dictionary",
     label: "Dictionary Checker",

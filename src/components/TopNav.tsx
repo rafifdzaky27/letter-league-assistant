@@ -10,8 +10,9 @@ export default function TopNav() {
 
   const navLinks = [
     { href: "/", label: "Solver" },
-    { href: "/dictionary", label: "Dictionary Checker" },
-    { href: "/guide", label: "How to Play" },
+    // { href: "/scan", label: "Scanner" }, // Hidden per user request
+    { href: "/dictionary", label: "Dictionary" },
+    { href: "/guide", label: "Guide" },
   ];
 
   return (
