@@ -1,0 +1,68 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const tabs = [
+  {
+    href: "/",
+    label: "Solver",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="2" y="2" width="6" height="6" rx="1" />
+        <rect x="12" y="2" width="6" height="6" rx="1" />
+        <rect x="2" y="12" width="6" height="6" rx="1" />
+        <rect x="12" y="12" width="6" height="6" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    href: "/dictionary",
+    label: "Checker",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M3 17V3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14l-3.5-2-2.5 2-2.5-2-2.5 2L3 17z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/guide",
+    label: "Guide",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="3" y="1" width="14" height="18" rx="2" />
+        <path d="M7 5h6M7 9h6M7 13h4" />
+      </svg>
+    ),
+  },
+];
+
+export default function MobileBottomNav() {
+  const pathname = usePathname();
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-stretch border-t border-border-default bg-bg-primary md:hidden">
+      {tabs.map((tab) => {
+        const isActive =
+          tab.href === "/"
+            ? pathname === "/"
+            : pathname.startsWith(tab.href);
+
+        return (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            className={`flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[11px] font-medium uppercase tracking-wider no-underline transition-colors ${
+              isActive
+                ? "border-t-2 border-accent-indigo-light bg-accent-indigo-bg text-accent-indigo-light"
+                : "text-text-secondary"
+            }`}
+          >
+            {tab.icon}
+            {tab.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
