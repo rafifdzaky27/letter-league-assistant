@@ -146,6 +146,29 @@ export default function GuidePage() {
                 </div>
               </div>
             </div>
+
+            {/* Mode 4: Extend Word */}
+            <div className="rounded-lg border border-[#ff7b52]/30 bg-[#ff7b52]/5 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="font-mono text-sm font-bold text-[#ff7b52]">Extend Word</h3>
+                <span className="rounded bg-[#ff7b52]/10 px-2 py-0.5 font-mono text-[10px] font-bold text-[#ff7b52]">NEW</span>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-text-secondary">
+                Wrap a word in hyphens to find ways to build upon an existing word on the board using your rack tiles.
+              </p>
+              <div className="mt-4 rounded border border-border-subtle bg-bg-input p-3">
+                <div className="font-mono text-xs text-text-secondary">
+                  <div>Rack: <span className="float-right font-bold text-text-primary">M E N T</span></div>
+                  <div className="mt-1">Pattern: <span className="float-right font-bold text-[#ff7b52]">-ENJOY-</span></div>
+                  <div className="mt-2 border-t border-border-faint pt-2">Result:</div>
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    {["ENJOYMENT"].map((w) => (
+                      <span key={w} className="rounded bg-[#ff7b52] px-2 py-0.5 text-[10px] font-bold text-white">{w}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* ── RULES COMPARISON ── */}

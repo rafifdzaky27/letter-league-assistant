@@ -5,6 +5,7 @@ import {
   solvePositional,
   solveAvailableLetters,
   solveRackOnly,
+  solveExtension,
 } from "@/lib/solver";
 
 export async function POST(request: Request) {
@@ -31,6 +32,9 @@ export async function POST(request: Request) {
         break;
       case "rack-only":
         results = solveRackOnly(words, rack);
+        break;
+      case "extension":
+        results = solveExtension(words, rack, pattern);
         break;
     }
 

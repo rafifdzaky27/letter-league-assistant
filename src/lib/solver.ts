@@ -277,6 +277,90 @@ export function solveRackOnly(
   return results;
 }
 
+// ---------- MODE 4: Extension (Substring) ----------
+// Pattern contains a hyphen (e.g. "-ENJOYS-"). Find words that contain the substring
+// and can be completed using the rack tiles.
+
+export function solveExtension(
+  words: string[],
+  rack: string,
+  pattern: string
+): WordResult[] {
+  const substring = pattern.toUpperCase().replace(/[^A-Z]/g, "");
+  if (!substring) return [];
+
+  const { letters: rackLetters, blanks } = parseRack(rack);
+  const poolCounts = letterCounts(rackLetters);
+  const results: WordResult[] = [];
+
+  for (const word of words) {
+    if (word.length <= substring.length) continue; // must actually extend it
+    if (!word.includes(substring)) continue;
+
+    // The letters we need from the rack are exactly `word` minus the FIRST occurrence of `substring`.
+    const remainingLetters = word.replace(substring, "");
+    
+    // Check if remainingLetters can be built from rack
+    const wc = letterCounts(remainingLetters.split(""));
+    let blanksNeeded = 0;
+    let possible = true;
+    for (const [ch, need] of wc) {
+      const have = poolCounts.get(ch) || 0;
+      if (need > have) {
+        blanksNeeded += need - have;
+        if (blanksNeeded > blanks) {
+          possible = false;
+          break;
+        }
+      }
+    }
+    if (!possible) continue;
+
+    // Now build the UsedTile array.
+    const startIdx = word.indexOf(substring);
+    const endIdx = startIdx + substring.length;
+
+    const availRack = [...rackLetters];
+    let blanksLeft = blanks;
+    const tiles: UsedTile[] = [];
+
+    for (let i = 0; i < word.length; i++) {
+      const ch = word[i];
+      if (i >= startIdx && i < endIdx) {
+        // This character is part of the board substring
+        tiles.push({
+          letter: ch,
+          points: letterValues[ch] || 0,
+          variant: "default",
+        });
+      } else {
+        // This character comes from the rack
+        const ri = availRack.indexOf(ch);
+        if (ri !== -1) {
+          availRack.splice(ri, 1);
+          tiles.push({
+            letter: ch,
+            points: letterValues[ch] || 0,
+            variant: "active",
+          });
+        } else {
+          blanksLeft--;
+          tiles.push({ letter: ch, points: 0, variant: "blank" });
+        }
+      }
+    }
+
+    results.push({
+      wordStr: word,
+      word: tiles,
+      score: tiles.reduce((s, t) => s + t.points, 0),
+      length: word.length,
+    });
+  }
+
+  return results;
+}
+
 // ---------- Public entry ----------
 
 export function calculateScore(tiles: UsedTile[]): number {
@@ -286,12 +370,14 @@ export function calculateScore(tiles: UsedTile[]): number {
 /**
  * Detect which solver mode to use based on the pattern string.
  *  - Contains '.' → positional pattern (`.E..R`)
+ *  - Contains '-' → extension / substring mode (`-ENJOYS-`)
  *  - Only letters   → available-board-letters mode (`BGHTL`)
  *  - Empty          → rack-only anagram mode
  */
-export function detectMode(pattern: string): "positional" | "available" | "rack-only" {
+export function detectMode(pattern: string): "positional" | "available" | "rack-only" | "extension" {
   const trimmed = pattern.trim();
   if (!trimmed) return "rack-only";
   if (trimmed.includes(".")) return "positional";
+  if (trimmed.includes("-")) return "extension";
   return "available";
 }

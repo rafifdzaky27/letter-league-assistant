@@ -140,9 +140,11 @@ export default function SolverDashboard() {
                     ? 'border-accent-indigo/30 bg-accent-indigo/10 text-accent-indigo-light'
                     : solveMode === 'available'
                     ? 'border-accent-green-border bg-accent-green-bg text-accent-green'
+                    : solveMode === 'extension'
+                    ? 'border-[#ff7b52]/30 bg-[#ff7b52]/10 text-[#ff7b52]'
                     : 'border-accent-yellow-border bg-accent-yellow-bg text-accent-yellow'
                 }`}>
-                  {solveMode === 'positional' ? 'Positional' : solveMode === 'available' ? 'Board Letters' : 'Rack Only'}
+                  {solveMode === 'positional' ? 'Positional' : solveMode === 'available' ? 'Board Letters' : solveMode === 'extension' ? 'Extend Word' : 'Rack Only'}
                 </span>
               )}
             </div>
@@ -153,7 +155,7 @@ export default function SolverDashboard() {
                   value={pattern}
                   onChange={(e) => setPattern(e.target.value.toUpperCase())}
                   onKeyDown={(e) => e.key === 'Enter' && handleSolve()}
-                  placeholder="e.g. BGHTL or .E..R"
+                  placeholder="e.g. BGHTL or .E..R or -ENJOYS-"
                   className="w-full border-b-2 border-border-default bg-bg-input px-4 py-4 font-mono text-lg font-bold text-text-primary placeholder:text-text-placeholder focus:border-accent-indigo focus:outline-none"
                 />
               </div>
@@ -161,6 +163,9 @@ export default function SolverDashboard() {
             <div className="mt-3 space-y-1">
               <p className="font-mono text-[11px] tracking-[0.55px] text-text-secondary">
                 <span className="text-accent-green">BGHTL</span> — letters on the board to hook into
+              </p>
+              <p className="font-mono text-[11px] tracking-[0.55px] text-text-secondary">
+                <span className="text-[#ff7b52]">-ENJOYS-</span> — build off a word already on the board
               </p>
               <p className="font-mono text-[11px] tracking-[0.55px] text-text-secondary">
                 <span className="text-accent-indigo-light">.E..R</span> — positional pattern (dots = fill from rack)
