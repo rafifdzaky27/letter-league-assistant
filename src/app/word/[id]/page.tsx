@@ -100,7 +100,7 @@ export default function WordDetail() {
               <section className="mb-8 flex flex-col items-center justify-center rounded-xl border border-[rgba(69,70,85,0.4)] bg-bg-secondary py-12 shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
                 <div className="flex flex-wrap justify-center gap-2 md:gap-3">
                   {tiles.map((t, i) => (
-                    <Tile key={i} letter={t.letter} points={t.points} variant={t.variant} size="xl" />
+                    <Tile key={i} letter={t.letter} points={t.points} variant={t.variant} size="lg" />
                   ))}
                 </div>
                 
